@@ -49,31 +49,34 @@ export default {
                 this.isLoading = true;
             }
 
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=09cedd8e05fa817ad86619c9390adb45`);
+            axios({
+                method: 'get',
+                url: `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=09cedd8e05fa817ad86619c9390adb45`
+            }).then((res) => {
 
-            const responseData = await response.json();
+                const responseData = res;
 
-            if (!response.ok) {
+                this.isLoading = false;
+
+                this.weatherInfo = {
+                    show: true,
+                    name: responseData.data.name,
+                    feelsLike: responseData.data.main.feels_like,
+                    humidity: responseData.data.main.humidity,
+                    pressure: responseData.data.main.pressure,
+                    temp: responseData.data.main.temp,
+                    tempMax: responseData.data.main.temp_max,
+                    tempMin: responseData.data.main.temp_min,
+                    descripion: responseData.data.weather[0].main,
+                    icon: responseData.data.weather[0].icon,
+                    windSpeed: responseData.data.wind.speed,
+                    country: responseData.data.sys.country
+                }
+            }).catch((err) => {
                 this.isLoading = false;
                 this.invalidInput = true;
-            }
-
-            this.isLoading = false;
-
-            this.weatherInfo = {
-                show: true,
-                name: responseData.name,
-                feelsLike: responseData.main.feels_like,
-                humidity: responseData.main.humidity,
-                pressure: responseData.main.pressure,
-                temp: responseData.main.temp,
-                tempMax: responseData.main.temp_max,
-                tempMin: responseData.main.temp_min,
-                descripion: responseData.weather[0].main,
-                icon: responseData.weather[0].icon,
-                windSpeed: responseData.wind.speed,
-                country: responseData.sys.country
-            }
+                console.log(err);
+            });
         }
     },
     created() {
