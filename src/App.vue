@@ -17,7 +17,7 @@
 
 <script>
 import CityName from './components/pages/CityName.vue';
-import axios from 'axios;
+import axios from 'axios';
 
 
 export default {
