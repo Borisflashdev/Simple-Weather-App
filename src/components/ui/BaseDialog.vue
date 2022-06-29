@@ -4,35 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    show: {
-      type: Boolean,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: false,
-    },
-    fixed: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-  },
-  emits: ['close'],
-  methods: {
-    tryClose() {
-      if (this.fixed) {
-        return;
-      }
-      this.$emit('close');
-    },
-  },
-};
-</script>
-
 <style scoped>
 .inv {
   display: flex;
